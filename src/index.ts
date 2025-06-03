@@ -1,6 +1,3 @@
 import m from "mithril";
 
-export function doSomething() {
-  m.redraw;
-  console.log("Hello, World!");
-}
+m.render(document.body, m("h1", {class: "title"}, "This is the title"));
