@@ -2,6 +2,12 @@ body {
   background-color: #ddeeff;
 }
 
-.title {
-  box-shadow: 5px 5px 5px;
+.grid {
+  border: 1px solid black;
+  display: grid;
+}
+
+.card {
+  display: block;
+  padding: 10px;
 }
