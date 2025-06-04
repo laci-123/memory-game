@@ -18,10 +18,10 @@ main {
   flex-grow: 1;
   box-sizing: border-box;
   border: 10px solid black;
-  /* width: 50%; */
   aspect-ratio: 1 / 1;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  --number-of-columns: 2;
+  grid-template-columns: repeat(var(--number-of-columns), 1fr);
   gap: 3cqmin;
   padding: 3cqmin;
 }

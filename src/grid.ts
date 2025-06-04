@@ -17,6 +17,10 @@ export class Grid {
     return this.cards.map(f);
   }
 
+  numOfColsNeededToBeSquare(): number {
+    return Math.ceil(Math.sqrt(this.cards.length));
+  }
+
   private initCards(numberOfPairs: number) {
     for(let i = 0; i < numberOfPairs; ++i) {
       const card = {
