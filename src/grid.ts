@@ -6,7 +6,7 @@ export class Grid {
 
     for(let i = 0; i < numberOfPairs; ++i) {
       const card = {
-        color: createRandomColor(),
+        value: i,
         facing: "down" as const,
       };
       this.cards.push(card);
@@ -23,21 +23,10 @@ export class Grid {
 
 
 export interface Card {
-  color: string;
+  value: number;
   facing: "up" | "down";
 }
 
-
-function createRandomColor(): string {
-  const r = getRandomInt(255);
-  const g = getRandomInt(255);
-  const b = getRandomInt(255);
-  return `rgb(${r}, ${g}, ${b})`;
-}
-
-function getRandomInt(max: number): number {
-  return Math.floor(Math.random() * max);
-}
 
 function shuffleArray<T>(array: Array<T>) {
     for (let i = array.length - 1; i > 0; i--) {

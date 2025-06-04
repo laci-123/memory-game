@@ -21,10 +21,7 @@ export function GridView() {
 
 const CardView = {
   view: function(vnode: {attrs: {card: Card}}) {
-    return m("div", {
-               style: `background-color: ${vnode.attrs.card.color}`,
-               class: "card",
-             },
-             "x");
+    return m("div", { class: "card" },
+             vnode.attrs.card.value);
   }
 }
