@@ -1,13 +1,30 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: #ddeeff;
 }
 
 .grid {
-  border: 1px solid black;
+  box-sizing: border-box;
+  border: 10px solid black;
+  height: 100vh;
   display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3cqmin;
+  padding: 3cqmin;
 }
 
 .card {
-  display: block;
-  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: 1px solid black;
+  border-radius: 10px;
+  font-size: 5cqmin;
+  font-weight: bold;
 }
