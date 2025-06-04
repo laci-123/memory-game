@@ -3,7 +3,21 @@ export class Grid {
 
   constructor(numberOfPairs: number) {
     this.cards = new Array<Card>();
+    this.initCards(numberOfPairs);
+  }
 
+  reinitIfNeeded(numberOfPairs: number) {
+    if(numberOfPairs !== this.cards.length / 2) {
+      this.cards = new Array<Card>();
+      this.initCards(numberOfPairs);
+    }
+  }
+
+  mapCards<T>(f: (card: Card) => T): Array<T> {
+    return this.cards.map(f);
+  }
+
+  private initCards(numberOfPairs: number) {
     for(let i = 0; i < numberOfPairs; ++i) {
       const card = {
         value: i,
@@ -14,10 +28,6 @@ export class Grid {
     }
 
     shuffleArray(this.cards);
-  }
-
-  mapCards<T>(f: (card: Card) => T): Array<T> {
-    return this.cards.map(f);
   }
 }
 

@@ -2,17 +2,17 @@ import {Card, Grid} from "../grid";
 import m from "mithril";
 
 
-export function GridView() {
+export function GridView(initialVnode: {attrs: {numberOfPairs: number}}) {
   let grid: Grid | undefined;
 
   return {
     oninit: function() {
-      grid = new Grid(4);      
+      grid = new Grid(initialVnode.attrs.numberOfPairs);  
     },
-    view: function() {
+    view: function(vnode: {attrs: {numberOfPairs: number}}) {
+      grid!.reinitIfNeeded(vnode.attrs.numberOfPairs);
       return m("div",
                {class: "grid"},
-               // Grid is not `undefined` because it is initalized in `oninit` which runs before `view`.
                grid!.mapCards(card => m(CardView, {card})));
     }
   }
