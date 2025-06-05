@@ -1,8 +1,8 @@
-import {Grid} from "../grid";
+import {Card, Grid} from "../grid";
 import m from "mithril";
 
 
-export function GridView(initialVnode: any) {
+export function GridView(initialVnode: m.Vnode<{numberOfPairs: number}>): m.Component<{numberOfPairs: number}> {
   let grid: Grid | undefined;
 
   return {
@@ -10,15 +10,15 @@ export function GridView(initialVnode: any) {
       grid = new Grid(initialVnode.attrs.numberOfPairs);  
     },
 
-    oncreate: function(vnode: any) {
-      vnode.dom.style.setProperty("--number-of-columns", grid!.numOfColsNeededToBeSquare().toString());
+    oncreate: function(vnode) {
+      (vnode.dom as HTMLElement).style.setProperty("--number-of-columns", grid!.numOfColsNeededToBeSquare().toString());
     },
     
-    onupdate: function(vnode: any) {
-      vnode.dom.style.setProperty("--number-of-columns", grid!.numOfColsNeededToBeSquare().toString());
+    onupdate: function(vnode) {
+      (vnode.dom as HTMLElement).style.setProperty("--number-of-columns", grid!.numOfColsNeededToBeSquare().toString());
     },
 
-    view: function(vnode: any) {
+    view: function(vnode) {
       grid!.reinitIfNeeded(vnode.attrs.numberOfPairs);
       return m("div",
                {class: "grid"},
@@ -28,9 +28,14 @@ export function GridView(initialVnode: any) {
 }
 
 
-const CardView = {
-  view: function(vnode: any) {
-    return m("div", { class: "card" },
-             vnode.attrs.card.value);
+const CardView: m.Component<{card: Card}> = {
+  view: function(vnode) {
+    const card = vnode.attrs.card;
+    return m("div", { class: "card",
+                      onclick: function() {
+                        card.flip();
+                      }
+                    },
+             card.facing === "up" ? card.value : "x");
   }
 }
