@@ -42,7 +42,7 @@ export class Card {
   constructor(x: number | Card) {
     if(typeof(x) === "number") {
       this.value = x;
-      this.facing = "up";
+      this.facing = "down";
     }
     else if(x instanceof Card){
       this.value = x.value;

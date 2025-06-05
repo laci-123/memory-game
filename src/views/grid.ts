@@ -31,7 +31,8 @@ export function GridView(initialVnode: m.Vnode<{numberOfPairs: number}>): m.Comp
 const CardView: m.Component<{card: Card}> = {
   view: function(vnode) {
     const card = vnode.attrs.card;
-    return m("div", { class: "card",
+    const face_class = card.facing === "up" ? "face-up" : "face-down";
+    return m("div", { class: `card ${face_class}`,
                       onclick: function() {
                         card.flip();
                       }
