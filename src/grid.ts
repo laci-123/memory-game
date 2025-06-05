@@ -23,12 +23,9 @@ export class Grid {
 
   private initCards(numberOfPairs: number) {
     for(let i = 0; i < numberOfPairs; ++i) {
-      const card = {
-        value: i,
-        facing: "down" as const,
-      };
+      const card = new Card(i);
       this.cards.push(card);
-      this.cards.push(structuredClone(card));
+      this.cards.push(new Card(card));
     }
 
     shuffleArray(this.cards);
@@ -36,9 +33,40 @@ export class Grid {
 }
 
 
-export interface Card {
+export class Card {
   value: number;
   facing: "up" | "down";
+
+  constructor(value: number);
+  constructor(other: Card);
+  constructor(x: number | Card) {
+    if(typeof(x) === "number") {
+      this.value = x;
+      this.facing = "up";
+    }
+    else if(x instanceof Card){
+      this.value = x.value;
+      this.facing = x.facing;
+    }
+    else {
+      throw x satisfies never;
+    }
+  }
+
+  flip() {
+    switch(this.facing) {
+      case "up": {
+        this.facing = "down";
+        break;
+      }
+      case "down": {
+        this.facing = "up";
+        break;
+      }
+      default:
+        throw this.facing satisfies never;
+    }
+  }
 }
 
 
