@@ -1,4 +1,4 @@
-import {Card} from "./grid";
+import {Card} from "./card";
 
 
 export class Game {

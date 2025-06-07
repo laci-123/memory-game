@@ -1,4 +1,4 @@
-import {Card} from "../grid";
+import {Card} from "../card";
 import {Game} from "../game";
 import m from "mithril";
 
