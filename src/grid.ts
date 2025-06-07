@@ -35,7 +35,7 @@ export class Grid {
 
 export class Card {
   value: number;
-  facing: "up" | "down";
+  facing: "up" | "down" | "removed";
 
   constructor(value: number);
   constructor(other: Card);
@@ -61,6 +61,10 @@ export class Card {
       }
       case "down": {
         this.facing = "up";
+        break;
+      }
+      case "removed": {
+        this.facing = "removed";
         break;
       }
       default:

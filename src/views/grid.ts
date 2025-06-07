@@ -1,42 +1,56 @@
-import {Card, Grid} from "../grid";
+import {Card} from "../grid";
+import {Game} from "../game";
 import m from "mithril";
 
 
 export function GridView(initialVnode: m.Vnode<{numberOfPairs: number}>): m.Component<{numberOfPairs: number}> {
-  let grid: Grid | undefined;
+  let game: Game | undefined;
 
   return {
     oninit: function() {
-      grid = new Grid(initialVnode.attrs.numberOfPairs);  
+      game = new Game(initialVnode.attrs.numberOfPairs);  
     },
 
     oncreate: function(vnode) {
-      (vnode.dom as HTMLElement).style.setProperty("--number-of-columns", grid!.numOfColsNeededToBeSquare().toString());
+      (vnode.dom as HTMLElement).style.setProperty("--number-of-columns", game!.numOfColsNeededToBeSquare().toString());
     },
     
     onupdate: function(vnode) {
-      (vnode.dom as HTMLElement).style.setProperty("--number-of-columns", grid!.numOfColsNeededToBeSquare().toString());
+      (vnode.dom as HTMLElement).style.setProperty("--number-of-columns", game!.numOfColsNeededToBeSquare().toString());
     },
 
     view: function(vnode) {
-      grid!.reinitIfNeeded(vnode.attrs.numberOfPairs);
+      game!.reinitIfNeeded(vnode.attrs.numberOfPairs);
       return m("div",
                {class: "grid"},
-               grid!.mapCards(card => m(CardView, {card})));
+               game!.mapCards(card => m(CardView, {card, onclick: (card) => game!.clickOnCard(card)})));
     }
   }
 }
 
 
-const CardView: m.Component<{card: Card}> = {
+const CardView: m.Component<{card: Card, onclick: (card: Card) => void}> = {
   view: function(vnode) {
     const card = vnode.attrs.card;
-    const face_class = card.facing === "up" ? "face-up" : "face-down";
-    return m("div", { class: `card ${face_class}`,
+    return m("div", { class: `card ${cardClass(card)}`,
                       onclick: function() {
-                        card.flip();
+                        vnode.attrs.onclick(card);
                       }
                     },
              card.facing === "up" ? card.value : "x");
+  }
+}
+
+
+function cardClass(card: Card): string {
+  switch(card.facing) {
+    case "up":
+      return "card-face-up";
+    case "down":
+      return "card-face-down";
+    case "removed":
+      return "card-removed";
+    default:
+      throw card.facing satisfies never;
   }
 }
